@@ -27,3 +27,28 @@ var PopularMediaType =  from x in MediaTypes where x.Tracks.Count() == MaxCount
 							};
 
 PopularMediaType.Dump();
+
+//Can this set of statements be done as one complete query?
+//The answer is possibly, not always, but in this case is a yes
+//In this example MaxCount could be exchanged for the query that actually created the value in the first place, and this substituted query is a sub-query
+var PopularMediaTypeSubQuery =  from x in MediaTypes where x.Tracks.Count() == (from y in MediaTypes select y.Tracks.Count()).Max()
+							select new
+							{
+								Type = x.Name,
+								TCount = x.Tracks.Count()
+							};
+
+PopularMediaTypeSubQuery.Dump();
+
+//Sub method 
+//Using the method syntax to detertmine a count value for the wehre expression
+//This demonstrates that queries can be constructed using both query syntax, and method syntax
+
+var PopularMediaTypeSubMethod =  from x in MediaTypes where x.Tracks.Count() == MediaTypes.Select(MT=>MT.Tracks.Count()).Max()
+							select new
+							{
+								Type = x.Name,
+								TCount = x.Tracks.Count()
+							};
+
+PopularMediaTypeSubMethod.Dump();
