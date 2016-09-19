@@ -1,6 +1,6 @@
-<Query Kind="Statements">
+<Query Kind="Expression">
   <Connection>
-    <ID>40287cce-39f6-4fad-94a2-5e2208cecbb8</ID>
+    <ID>51999ef4-bfd4-446c-bb35-4f3ee9b8236a</ID>
     <Persist>true</Persist>
     <Server>.</Server>
     <Database>Chinook</Database>
@@ -38,16 +38,4 @@ select new
 	PriceOfAlbum = x.Tracks.Sum(y => y.UnitPrice),
 	AverageTrackLenghtInSeconds = x.Tracks.Average(y => y.Milliseconds / 1000) //Using an expresion is useful when we are doing invoices for example. (I have 3 things that cost 30, and 4 that cost 40 how much is the sum?)
 }
-
-//Know the media type with the most tracks
-var numberOfTracks = x.Tracks.Count();
-
-from x in MediaTypes
-where x.Tracks.Max(numberOfTracks)
-select new
-{
-	x.Name,
-	NumberOfTracks = x.Tracks.Count()
-}
-
 
